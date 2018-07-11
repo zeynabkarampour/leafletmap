@@ -1,11 +1,11 @@
-
-//var map = L.map('map', {
+var map;
+// var map = new L.map('map', {
 //   center: [20.0, 5.0],
 //   minZoom: 2,
 //   zoom: 2
-//})
+// })
 
-//L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+// L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 //   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 //   subdomains: ['a', 'b', 'c']
 // }).addTo(map);
@@ -31,8 +31,8 @@ var myIcon = L.icon({
 // }
 
 $(document).ready(function () {
-    // if (map != undefined) { map.remove(); }
-    var map = new L.map('map').setView([0, 0], 3);
+    if (map != undefined) { map.remove(); }
+    var map = L.map('map').setView([0, 0], 3);
 
     L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
