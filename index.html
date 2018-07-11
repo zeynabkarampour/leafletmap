@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+
+    <!-- Added a link to leaflet css (map)-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+        crossorigin="" />
+    <!--  Leaflet JavaScript  (Make sure you put this AFTER Leaflet's CSS )-->
+    <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+        crossorigin=""></script>
+
+    <!--leaflet-control-geocoder -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
+    <!-- moment.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+    <!-- // <script src="https://www.gstatic.com/firebasejs/5.2.0/firebase.js"></script> -->
+    <script type="text/javascript" src="http://tracking.musixmatch.com/t1.0/AMa6hJCIEzn1v8RuOP"></script>
+    <!-- Added a link to Css file-->
+    <link rel="stylesheet" type="text/css" href="./style.css">
+
+
+    <script src="main.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="jumbotron bg-info text-center">
+            <h4 class="text-light">Search for the event By Artist, Location and Date</h4>
+            <hr class="bg-warning">
+            <span>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form_control" id="artist-name" placeholder="Artist">
+                        <input type="text" class="form_control" id="location" placeholder="Location">
+                        <input type="text" class="form_control" id="lyric" placeholder="name of song">
+
+                        <input type="text" class="form_control" id="date" placeholder="Date 2018-07-09">
+                        <input type="button" value="Submit" class="form_control btn btn-warning" id="submit">
+                    </div>
+                </form>
+            </span>
+
+        </div>
+
+    </div>
+    <div class="container">
+        <div class="jumbotron bg-white">
+            <section id="information">
+                <div id="picture">
+
+                </div>
+                <div id="map" style="height: 440px; border: 1px solid #AAA;"></div>
+            </section>
+            <section id="map">
+
+            </section>
+        </div>
+
+    </div>
+    <img src="http://tracking.musixmatch.com/t1.0/AMa6hJCIEzn1v8RuXW">
+    <script src="https://openlayersbook.github.io/openlayers_book_samples/assets/ol3/js/ol.js"></script>
+    <script type='text/javascript' src='markers.json'></script>
+    <script type='text/javascript' src='main.js'></script>
+</body>
+
+</html>
