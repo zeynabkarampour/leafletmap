@@ -1,9 +1,4 @@
-var map = L.map('map').setView([0, 0], 2);
 
-L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
-L.Control.geocoder().addTo(map);
 //var map = L.map('map', {
 //   center: [20.0, 5.0],
 //   minZoom: 2,
@@ -26,17 +21,25 @@ var myIcon = L.icon({
     popupAnchor: [0, -14]
 });
 
-for (var i = 0; i < markers.length; ++i) {
-    L.marker([markers[i].lat, markers[i].lng], {
-            icon: myIcon
-        })
-        .bindPopup('<a href="' + markers[i].url + '" target="_blank">' + markers[i].name + '</a>')
-        .addTo(map);
+// for (var i = 0; i < markers.length; ++i) {
+//     L.marker([markers[i].lat, markers[i].lng], {
+//             icon: myIcon
+//         })
+//         .bindPopup('<a href="' + markers[i].url + '" target="_blank">' + markers[i].name + '</a>')
+//         .addTo(map);
 
-}
+// }
 
 $(document).ready(function () {
-    // Basic URL with application-key for search 
+    // if (map != undefined) { map.remove(); }
+    var map = new L.map('map').setView([0, 0], 3);
+
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+    L.Control.geocoder().addTo(map);
+
+    // Basic URL with application-key for search
     var URL = "http://api.eventful.com/json/events/search?app_key=5gPscV7SZB2jTK6n"
     var URL2 = "http://api.musixmatch.com/ws/1.1/track.search?apikey=502a6b05dfefae386639fa1c47212aa3"
     var URL3 = "http://api.musixmatch.com/ws/1.1/track.lyrics.get?apikey=502a6b05dfefae386639fa1c47212aa3"
@@ -51,16 +54,17 @@ $(document).ready(function () {
     var date = ""; // place holder for date
 
 
-    // When user enters the information and clicks the button 
+    // When user enters the information and clicks the button
     $("#picture").empty();
     $("#submit").on("click", function () {
         event.preventDefault(); // prevent the default action
+
 
         // a fucntion which will detect which information has been entered ,
         // which will be used to build the URL
         var parameter = getParameter();
 
-        //once we have parameter, we can create Query URL 
+        //once we have parameter, we can create Query URL
         // Page sze is to limit only one event at a time
         queryURL = URL + parameter + "&page_size=10";
         queryURL2 = URL2 + "&q_track=" + $("#lyric").val() + "&q_artist=" + artist;
@@ -72,6 +76,7 @@ $(document).ready(function () {
             dataType: 'jsonp',
         }).then(function (response) {
             $("#picture").empty();
+            console.log('response', response);
 
             for (var i = 0; i < response.events.event.length; i++) {
 
@@ -93,6 +98,7 @@ $(document).ready(function () {
                 var thelongitude = result.longitude;
                 console.log("the longitude is :", thelongitude);
 
+
                 var thecity = result.city_name;
                 var thecountry = result.country_name;
                 var thevenu = result.venue_name;
@@ -101,7 +107,7 @@ $(document).ready(function () {
                 information.append("<br>");
                 information.append("Title : <strong>" + result.title + "</strong><br>");
                 information.append("venue : <strong>" + thevenu + "</strong><br>");
-                information.append("Address : " + thevenueadress + "<br>");
+                information.append("<span class='venue-address' data-lat='" + thelatitude + "' data-lon='" + thelongitude + "' data-venue='" + thevenu + "' data-url='" + result.url + "'>Address: " + thevenueadress + "</span><br>");
                 information.append("City  : <strong>" + thecity + "</strong><br>");
                 information.append("Country : <strong>" + thecountry + "</strong><br>");
                 information.append("Date & Time : " + result.start_time + "<br>");
@@ -170,7 +176,7 @@ $(document).ready(function () {
             // search should be by artist
             parameter = "&keywords=" + artist;
         } else if (location != "") {
-            // if artist value is null and location value is not null 
+            // if artist value is null and location value is not null
             parameter = "&keywords=" + location;
 
         } else if (date != "") {
@@ -180,4 +186,19 @@ $(document).ready(function () {
         }
         return parameter;
     }
+    $("body").on('click', '.venue-address', function() {
+        console.log('address was clicked', $(this));
+        var long = $(this).data('lon');
+        var lat = $(this).data('lat');
+        var venue = $(this).data('venue');
+        var url = $(this).data('url');
+        $("#map").get(0).scrollIntoView();
+
+        L.marker([lat, long], {
+            icon: myIcon
+        })
+        .bindPopup('<a href="' + url + '" target="_blank">' + artist + " @ " + venue + '</a>')
+        .addTo(map);
+        map.setView([lat, long], 16);
+    })
 });
